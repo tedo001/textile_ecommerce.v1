@@ -1,0 +1,2 @@
+# Trained model artifacts (.joblib) are written here by `python ml/training/train_all.py`.
+# This file just keeps the directory in version control.
