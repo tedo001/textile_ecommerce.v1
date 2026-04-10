@@ -1,27 +1,25 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { api, Product } from '@/lib/api';
 import ProductGrid from '@/components/products/ProductGrid';
 
-async function getProducts(): Promise<Product[]> {
-  try {
-    const { data } = await api.get('/products', { params: { limit: 8, sort: 'popular' } });
-    return data.items || [];
-  } catch {
-    return [];
-  }
-}
+export default function HomePage() {
+  const [featured, setFeatured] = useState<Product[]>([]);
+  const [trending, setTrending] = useState<Product[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
-async function getTrending(): Promise<Product[]> {
-  try {
-    const { data } = await api.get('/products/trending');
-    return data.items || [];
-  } catch {
-    return [];
-  }
-}
-
-export default async function HomePage() {
-  const [featured, trending] = await Promise.all([getProducts(), getTrending()]);
+  useEffect(() => {
+    Promise.all([
+      api.get('/products', { params: { limit: 8, sort: 'popular' } }).then((r) => r.data.items || []).catch(() => []),
+      api.get('/products/trending').then((r) => r.data.items || []).catch(() => []),
+    ]).then(([feat, trend]) => {
+      setFeatured(feat);
+      setTrending(trend);
+      setLoaded(true);
+    });
+  }, []);
 
   return (
     <>
@@ -44,7 +42,6 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-200 shadow-card">
-            {/* Decorative tile - replaceable with hero image */}
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=1200')] bg-cover bg-center opacity-90" />
           </div>
         </div>
@@ -63,7 +60,11 @@ export default async function HomePage() {
             View all →
           </Link>
         </div>
-        <ProductGrid products={trending.length ? trending : featured} />
+        {loaded ? (
+          <ProductGrid products={trending.length ? trending : featured} />
+        ) : (
+          <div className="py-8 text-center text-brand-400">Loading products…</div>
+        )}
       </section>
 
       {/* Categories */}
@@ -87,7 +88,11 @@ export default async function HomePage() {
       {/* Featured */}
       <section className="container-responsive py-16">
         <h2 className="mb-6 font-display text-3xl font-semibold text-brand-900">Featured</h2>
-        <ProductGrid products={featured} />
+        {loaded ? (
+          <ProductGrid products={featured} />
+        ) : (
+          <div className="py-8 text-center text-brand-400">Loading products…</div>
+        )}
       </section>
     </>
   );
