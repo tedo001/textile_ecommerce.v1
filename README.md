@@ -18,7 +18,7 @@ and image-based search).
                         └────────────┘            └────────────┘
 ```
 
-## 📁 Repository Layout
+## Repository Layout
 
 ```
 .
@@ -32,7 +32,7 @@ and image-based search).
 └── README.md
 ```
 
-## 🚀 Quick Start (Local)
+## Quick Start (Local)
 
 > Requirements: Node.js ≥ 18, Python ≥ 3.10, MongoDB (local or Atlas).
 
@@ -68,7 +68,7 @@ Or, with Docker:
 docker-compose up --build
 ```
 
-## ✨ Features
+## Features
 
 ### Storefront
 - Email + Google authentication (JWT)
@@ -96,7 +96,7 @@ docker-compose up --build
 - Auto-retrain GitHub Action (cron + manual)
 - Monitoring endpoint exposing model accuracy / latency
 
-## 🔐 Environment Variables
+## Environment Variables
 
 See `backend/.env.example`, `frontend/.env.example`, and `ml/.env.example`.
 
@@ -110,7 +110,7 @@ See `backend/.env.example`, `frontend/.env.example`, and `ml/.env.example`.
 | ml       | `MODELS_DIR`       | Folder where trained models live         |
 | ml       | `MLFLOW_TRACKING_URI` | MLflow tracking server (optional)     |
 
-## 🌐 Deployment
+## Deployment
 
 | Component | Recommended Host | How                                              |
 |-----------|------------------|--------------------------------------------------|
@@ -121,7 +121,7 @@ See `backend/.env.example`, `frontend/.env.example`, and `ml/.env.example`.
 
 See `docs/DEPLOYMENT.md` for step-by-step instructions.
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 cd backend && npm test
@@ -129,6 +129,6 @@ cd ml && pytest
 cd frontend && npm test
 ```
 
-## 📜 License
+##  License
 
 MIT
